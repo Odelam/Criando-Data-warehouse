@@ -9,6 +9,22 @@ Project("{159641D6-6404-4A2A-AE62-294DE0FE8301}") = "CargaDatawarehouse", "Carga
 EndProject
 Project("{D2ABAB84-BF74-430A-B69E-9DC6D40DDA17}") = "OLAPSucos", "OLAPSucos\OLAPSucos.dwproj", "{9790FBBD-E6D0-46B0-BD9A-A90511D3CCA9}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Consultas-MDX", "Consultas-MDX", "{836C3335-333C-419D-8C84-5CFCB32ED2A2}"
+	ProjectSection(SolutionItems) = preProject
+		calculo-entre-membros.mdx = calculo-entre-membros.mdx
+		crossjoin.mdx = crossjoin.mdx
+		descendants-ascendants.mdx = descendants-ascendants.mdx
+		filter.mdx = filter.mdx
+		hierarchize.mdx = hierarchize.mdx
+		navegando-entre-periodos.mdx = navegando-entre-periodos.mdx
+		non-empty.mdx = non-empty.mdx
+		order.mdx = order.mdx
+		parallelPeriod.mdx = parallelPeriod.mdx
+		set.mdx = set.mdx
+		sum-min-max.mdx = sum-min-max.mdx
+		with.mdx = with.mdx
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

@@ -1,0 +1,48 @@
+select ({ [Produto].[Categoria].members}) on rows,
+({ [Measures].[Faturamento], [Measures].[Faturamento Líquido]}) on columns
+from [COMPLETO]
+where ([Tempo].[Ano].&[2014])
+
+with
+member [Measures].[Novo Faturamento Líquido] as 
+'[Measures].[Faturamento] - [Measures].[Frete Rateio] - [Measures].[Imposto]'
+select ({ [Produto].[Categoria].members}) on rows,
+({ [Measures].[Faturamento], [Measures].[Faturamento Líquido], [Measures].[Novo Faturamento Líquido]}) on columns
+from [COMPLETO]
+where ([Tempo].[Ano].&[2014])
+
+with
+member [Measures].[Novo Faturamento Líquido] as 
+'[Measures].[Faturamento] - [Measures].[Frete Rateio] - [Measures].[Imposto]'
+member [Measures].[Variação Faturamento] as 
+'[Measures].[Novo Faturamento líquido] / [Measures].[Faturamento]'
+select ({ [Produto].[Categoria].members}) on rows,
+({ [Measures].[Faturamento], [Measures].[Faturamento Líquido], [Measures].[Novo Faturamento Líquido], [Measures].[Variação Faturamento]}) on columns
+from [COMPLETO]
+where ([Tempo].[Ano].&[2014])
+
+with
+member [Measures].[Novo Faturamento Líquido] as 
+'[Measures].[Faturamento] - [Measures].[Frete Rateio] - [Measures].[Imposto]',
+format_string = '#,###.##'
+member [Measures].[Variação Faturamento] as 
+'[Measures].[Novo Faturamento líquido] / [Measures].[Faturamento]',
+format_string = '#,###.## %'
+select ({ [Produto].[Categoria].members}) on rows,
+({ [Measures].[Faturamento], [Measures].[Faturamento Líquido], [Measures].[Novo Faturamento Líquido], [Measures].[Variação Faturamento]}) on columns
+from [COMPLETO]
+where ([Tempo].[Ano].&[2014])
+
+select ({[Tempo].[Mës e Ano].&[2013]&[01-2013]&[01-2013]&[01-2013], [Tempo].[Mës e Ano].&[2013]&[01-2013]&[01-2013]&[02-2013]}) on columns,
+({[Produto].[Marca].members}) on rows
+from [COMPLETO]
+where ([Measures].[Faturamento])
+
+with
+member [Tempo].[Mës e Ano].[Variação Fevereiro e Janeiro] as
+'(1 -([Tempo].[Mës e Ano].&[2013]&[01-2013]&[01-2013]&[01-2013] / [Tempo].[Mës e Ano].&[2013]&[01-2013]&[01-2013]&[02-2013]))',
+format_string = '##,###.00 %'
+select ({[Tempo].[Mës e Ano].&[2013]&[01-2013]&[01-2013]&[01-2013], [Tempo].[Mës e Ano].&[2013]&[01-2013]&[01-2013]&[02-2013], [Tempo].[Mës e Ano].[Variação Fevereiro e Janeiro]}) on columns,
+({[Produto].[Marca].members}) on rows
+from [COMPLETO]
+where ([Measures].[Faturamento])
