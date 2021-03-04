@@ -1,0 +1,40 @@
+select non empty ({[Tempo].[Hierarquia do Mês e Ano].[Nível Mës e Ano].members}) on rows,
+({[Measures].[Faturamento]}) on columns
+from [COMPLETO]
+
+with member
+[Measures].[Faturamento Year To Date] as
+'Sum(PeriodsToDate([Tempo].[Hierarquia do Mês e Ano].[Ano], [Tempo].[Hierarquia do Mês e Ano].CurrentMember), [Measures].[Faturamento])',
+format_string = '##,###.00'
+select non empty ({[Tempo].[Hierarquia do Mês e Ano].[Nível Mës e Ano].members}) on rows,
+({[Measures].[Faturamento], [Measures].[Faturamento Year To Date]}) on columns
+from [COMPLETO]
+
+with member
+[Measures].[Faturamento Year To Date] as
+'Sum(PeriodsToDate([Tempo].[Hierarquia do Mês e Ano].[Ano], [Tempo].[Hierarquia do Mês e Ano].CurrentMember), [Measures].[Faturamento])',
+format_string = '##,###.00'
+member
+[Measures].[Faturamento Trimestre To Date] as
+'Sum(PeriodsToDate([Tempo].[Hierarquia do Mês e Ano].[Nível Trimestre e Ano], [Tempo].[Hierarquia do Mês e Ano].CurrentMember), [Measures].[Faturamento])',
+format_string = '##,###.00'
+select non empty ({[Tempo].[Hierarquia do Mês e Ano].[Nível Mës e Ano].members}) on rows,
+({[Measures].[Faturamento], [Measures].[Faturamento Year To Date], [Measures].[Faturamento Trimestre To Date]}) on columns
+from [COMPLETO]
+
+WITH MEMBER
+[Measures].[Faturamento Trimestre no Ano] AS
+'Sum(PeriodsToDate([Tempo].[Hierarquia do Mês e Ano].[Ano], [Tempo].[Hierarquia do Mês e Ano].Currentmember),[Measures].[Faturamento])',
+FORMAT_STRING = "##,###.00"
+SELECT NON EMPTY ({[Tempo].[Hierarquia do Mês e Ano].[Nível Mës e Ano].Members})  ON ROWS,
+({[Measures].[Faturamento], [Measures].[Faturamento Trimestre no Ano]}) ON COLUMNS
+FROM [COMPLETO]
+
+WITH MEMBER
+[Measures].[Faturamento Trimestre no Ano] AS
+'Sum(PeriodsToDate([Tempo].[Hierarquia do Mês e Ano].[Ano], [Tempo].[Hierarquia do Mês e Ano].Currentmember),[Measures].[Faturamento])',
+FORMAT_STRING = "##,###.00"
+SELECT NON EMPTY ({[Tempo].[Hierarquia do Mês e Ano].[Nível Trimestre e Ano].Members})  ON ROWS,
+({[Measures].[Faturamento], [Measures].[Faturamento Trimestre no Ano]}) ON COLUMNS
+FROM [COMPLETO]
+

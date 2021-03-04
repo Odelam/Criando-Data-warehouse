@@ -1,0 +1,90 @@
+
+with member [Measures].[Faturamento de Vendas] as
+'[Measures].[Faturamento]', format_string = "##,###.00"
+select ({[Cliente].[Hierarquia Geográfica].[Nível Cidade].members}) on rows,
+({[Measures].[Faturamento de Vendas]}) on columns
+from [COMPLETO]
+where ([Tempo].[Ano].&[2014])
+
+
+with
+set [Cidades] as
+'[Cliente].[Hierarquia Geográfica].[Nível Cidade]'
+member [Measures].[Faturamento de Vendas] as
+'[Measures].[Faturamento]', format_string = "##,###.00"
+select ({[Cidades]}) on rows,
+({[Measures].[Faturamento de Vendas]}) on columns
+from [COMPLETO]
+where ([Tempo].[Ano].&[2014])
+
+with
+set [Cidades] as
+'order ([Cliente].[Hierarquia Geográfica].[Nível Cidade].members, [Measures].[Faturamento], bdesc)'
+member [Measures].[Faturamento de Vendas] as
+'[Measures].[Faturamento]', format_string = "##,###.00"
+select ({[Cidades]}) on rows,
+({[Measures].[Faturamento de Vendas]}) on columns
+from [COMPLETO]
+where ([Tempo].[Ano].&[2014])
+
+
+
+with
+set [Cidades] as
+'order ([Cliente].[Hierarquia Geográfica].[Nível Cidade].members, [Measures].[Faturamento], bdesc)'
+member [Measures].[Faturamento de Vendas] as
+'[Measures].[Faturamento]', format_string = "##,###.00"
+member [Measures].[Posição no Rank] as
+'Rank ([Cliente].[Hierarquia Geográfica].Currentmember, [Cidades])', format_string = "#;#-"
+select ({[Cidades]}) on rows,
+({[Measures].[Faturamento de Vendas], [Measures].[Posição no Rank]}) on columns
+from [COMPLETO]
+where ([Tempo].[Ano].&[2014])
+
+with
+set [Cidades] as
+'order ([Cliente].[Hierarquia Geográfica].[Nível Cidade].members, [Measures].[Faturamento], bdesc)'
+member [Measures].[Faturamento de Vendas] as
+'[Measures].[Faturamento]', format_string = "##,###.00"
+member [Measures].[Posição no Rank] as
+'Rank ([Cliente].[Hierarquia Geográfica].Currentmember, [Cidades])', format_string = "#ª;#-"
+member [Measures].[Contador de Cidades] as
+'([Cliente].[Hierarquia Geográfica].[Nível Cidade].Count)', format_string = "#;#-"
+select ({[Cidades]}) on rows,
+({[Measures].[Faturamento de Vendas], [Measures].[Posição no Rank], [Measures].[Contador de Cidades]}) on columns
+from [COMPLETO]
+where ([Tempo].[Ano].&[2014])
+
+WITH
+SET [Cidades Ordenadas Faturamento] AS
+'ORDER([Cliente].[Hierarquia Geográfica].[Nível Cidade].MEMBERS, [Measures].[Faturamento], BDESC)'
+SET [Cidades Ordenadas por Margem] AS
+'ORDER([Cliente].[Hierarquia Geográfica].[Nível Cidade].MEMBERS, [Measures].[Margem], BDESC)'
+MEMBER [Measures].[Faturamento de Vendas]
+AS
+'[Measures].[Faturamento]', FORMAT_STRING = "##,###.00"
+MEMBER [Measures].[Posição no Rank Margem] AS
+'RANK( [Cliente].[Hierarquia Geográfica].Currentmember, [Cidades Ordenadas por Margem])' , FORMAT_STRING = "#;#;-"
+SELECT ({ [Cidades Ordenadas por Margem] }) ON ROWS,
+( { [Measures].[Faturamento de Vendas], [Measures].[Posição no Rank Margem]}) ON COLUMNS
+FROM [COMPLETO]
+WHERE ([Tempo].[Ano].&[2014])
+
+
+
+WITH
+SET [Cidades Ordenadas Faturamento] AS
+'ORDER([Cliente].[Hierarquia Geográfica].[Nível Cidade].MEMBERS, [Measures].[Faturamento], BDESC)'
+SET [Cidades Ordenadas por Margem] AS
+'ORDER([Cliente].[Hierarquia Geográfica].[Nível Cidade].MEMBERS, [Measures].[Margem], BDESC)'
+MEMBER [Measures].[Faturamento de Vendas]
+AS
+'[Measures].[Faturamento]', FORMAT_STRING = "##,###.00"
+MEMBER [Measures].[Posição no Rank Margem] AS
+'RANK( [Cliente].[Hierarquia Geográfica].Currentmember, [Cidades Ordenadas por Margem])' , FORMAT_STRING = "#;#;-"
+SELECT ({ [Cidades Ordenadas Faturamento] }) ON ROWS,
+( { [Measures].[Faturamento de Vendas], [Measures].[Posição no Rank Margem]}) ON COLUMNS
+FROM [COMPLETO]
+WHERE ([Tempo].[Ano].&[2014])
+
+

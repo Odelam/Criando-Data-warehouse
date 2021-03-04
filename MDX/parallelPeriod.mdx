@@ -30,3 +30,14 @@ format_string = '#,###.## %'
 select ({[Tempo].[Hierarquia do Mês e Ano].[Nível Mës e Ano].members}) on rows,
 ({[Measures].[Faturamento], [Measures].[Variação Faturamento Ano]}) on columns
 from [COMPLETO]
+
+WITH MEMBER [Measures].[Variação Faturamento]
+AS
+'([Measures].[Faturamento]) - 
+([Measures].[Faturamento], ParallelPeriod([Tempo].[Hierarquia do Mês e Ano].[Ano], 2, 
+[Tempo].[Hierarquia do Mês e Ano].Currentmember)) ',
+FORMAT_STRING = "##,###.00"
+SELECT ({[Tempo].[Hierarquia do Mês e Ano].[Ano].&[2013],[Tempo].[Hierarquia do Mês e Ano].[Ano].&[2015] }) On Rows,
+({[Measures].[Faturamento], [Measures].[Variação Faturamento]}) On Columns
+FROM [COMPLETO]
+

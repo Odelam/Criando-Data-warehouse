@@ -1,0 +1,61 @@
+
+with member [Measures].[Faturamento de Vendas] as
+'[Measures].[Faturamento]', format_string = "#,###.00"
+select ({[Cliente].[Hierarquia Geográfica].[Nível Cidade].members}) on rows,
+({[Tempo].[Hierarquia do Mês e Ano].[Ano].&[2014]}) on columns
+from[COMPLETO]
+where ([Measures].[Faturamento de Vendas])
+
+with member [Measures].[Faturamento de Vendas] as
+'[Measures].[Faturamento]', format_string = "#,###.00"
+select
+order (
+{[Cliente].[Hierarquia Geográfica].[Nível Cidade].members}, [Measures].[Faturamento], bdesc) on rows,
+({[Tempo].[Hierarquia do Mês e Ano].[Ano].&[2014]}) on columns
+from[COMPLETO]
+where ([Measures].[Faturamento de Vendas])
+
+with member [Measures].[Faturamento de Vendas] as
+'[Measures].[Faturamento]', format_string = "#,###.00"
+select
+order ( 
+TopCount (
+{[Cliente].[Hierarquia Geográfica].[Nível Cidade].members}, 3, [Measures].[Faturamento]
+)
+, [Measures].[Faturamento], bdesc)
+on rows,
+({[Tempo].[Hierarquia do Mês e Ano].[Ano].&[2014]}) on columns
+from[COMPLETO]
+where ([Measures].[Faturamento de Vendas])
+
+with member [Measures].[Faturamento de Vendas] as
+'[Measures].[Faturamento]', format_string = "#,###.00"
+select
+order ( 
+BottomCount (
+{[Cliente].[Hierarquia Geográfica].[Nível Cidade].members}, 3, [Measures].[Faturamento]
+)
+, [Measures].[Faturamento], bdesc)
+on rows,
+({[Tempo].[Hierarquia do Mês e Ano].[Ano].&[2014]}) on columns
+from[COMPLETO]
+where ([Measures].[Faturamento de Vendas])
+
+WHERE [Measures].[Faturamento de Vendas]
+
+Alternativa correta
+
+WITH MEMBER [Measures].[Faturamento de Vendas]
+AS
+'[Measures].[Faturamento]', FORMAT_STRING = "#,###.00"
+SELECT 
+ORDER ( 
+TopCount  (
+{[Cliente].[Hierarquia Geográfica].[Nível Cidade].Members} , 3, [Measures].[Faturamento]
+), [Measures].[Faturamento], BASC)
+on rows,
+([Tempo].[Hierarquia do Mês e Ano].[Ano].&[2014]) on columns
+from [COMPLETO]
+WHERE [Measures].[Faturamento de Vendas]
+
+

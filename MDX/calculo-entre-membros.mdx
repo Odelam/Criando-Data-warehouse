@@ -53,3 +53,13 @@ format_string = '#,###.## %'
 select non empty ({[Tempo].[Hierarquia do Mês e Ano].[Nível Mës e Ano].members}) on rows,
 ({[Measures].[Faturamento], [Measures].[% Taxa Variação Trimestre], [Measures].[% Taxa Variação Semestre], [Measures].[% Taxa Variação Ano]}) on columns
 from [COMPLETO]
+
+WITH MEMBER [Measures].[Participação de Vendas por Fábrica] AS
+' [Measures].[Faturamento] / 
+( [Measures].[Faturamento], [Fábrica].[Hierarquia das Fábricas].Currentmember.Parent )'
+, FORMAT_STRING = '#,###.## %'
+SELECT NON EMPTY 
+({[Fábrica].[Hierarquia das Fábricas].[Nível Fábrica].Members}) on Rows,
+({[Measures].[Faturamento], [Measures].[Participação de Vendas por Fábrica]}) on Columns from [COMPLETO]
+WHERE [Tempo].[Hierarquia do Mês e Ano].[Ano].&[2014]
+
